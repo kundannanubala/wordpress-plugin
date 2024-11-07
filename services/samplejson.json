@@ -1,0 +1,25 @@
+{
+  "context": "Our company is launching a new product and wants to send personalized emails to our customers to inform them about an exclusive offer.",
+  "audience_context_keywords": [
+    "VIP customer"
+  ],
+  "tone_keywords": [
+"Exclusive", "Warm"
+  ],
+  "offer_elements": [
+    "Early access", "Special discount"
+  ],
+  "personalization_elements": [
+   "Customer name", "Purchase history reference", "Site name", "Custom discount code"
+  ],
+  "site_name": "TechGadgetsPro.com",
+  "product_to_endorse": "Next-Gen Smartwatch",
+  "customer_name": "Alex Smith",
+  "purchase_history": "Recently purchased a fitness tracker",
+  "custom_discount_code": "VIPSMART",
+  "personalized_recommendations": [
+    "Upgrade to the latest technology"
+  ],
+  "ps_content": "This offer is valid for a limited time only!",
+  "source_link": "www.techgadgetspro.com/earlyaccess"
+}
