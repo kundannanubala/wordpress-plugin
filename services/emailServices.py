@@ -6,6 +6,8 @@ from google.cloud import aiplatform
 from core.config import settings
 import asyncio
 from motor.motor_asyncio import AsyncIOMotorClient
+import markdown_to_json
+import json
 # Email Prompt Template
 def email_prompt_template():
     email_prompt="""You are tasked with generating a dynamic and personalized email for our company to its customers. Follow the steps below to ensure clarity, accuracy, and coherence. Avoid hallucination by strictly adhering to the provided variables from the context.
@@ -99,8 +101,31 @@ async def email_generation(email_request: EmailRequest):
             | llm
             | StrOutputParser()
         )
-        result = await asyncio.to_thread(chain.invoke, context)
-        return result
+        json_result = await asyncio.to_thread(chain.invoke, context)
+
+        # Parse the markdown result
+        # ast = markdown_to_json.CommonMark.DocParser().parse(result)
+        # tmp = markdown_to_json.CMarkASTNester().nest(ast)
+        # json_result = markdown_to_json.Renderer().stringify_dict(tmp)
+        # json_result = markdown_to_json.jsonify(result)
+        json_result = clean_and_convert_to_json(json_result)
+
+        return json_result
     except Exception as e:
         raise e
         
+def clean_and_convert_to_json(response: str) -> dict:
+    # Find the start and end of the JSON content
+    start_index = response.find('{')
+    end_index = response.rfind('}') + 1
+
+    # Extract the JSON string
+    json_string = response[start_index:end_index]
+
+    # Parse the JSON string into a dictionary
+    try:
+        json_data = json.loads(json_string)
+    except json.JSONDecodeError as e:
+        raise ValueError("Invalid JSON format") from e
+
+    return json_data

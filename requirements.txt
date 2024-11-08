@@ -31,3 +31,6 @@ langchain_google_genai
 
 # LangChain Community for additional functionality
 langchain_community
+
+# Markdown to JSON parser
+markdown-to-json
